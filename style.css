@@ -1,9 +1,15 @@
 body{
 font-family:Arial, sans-serif;
-background:#010414;
-color:white;
 text-align:center;
 padding:15px;
+background:#010414;
+color:white;
+transition: background 0.5s, color 0.5s;
+}
+
+body.day{
+background:#e0f2fe;
+color:#111;
 }
 
 h1{
@@ -16,6 +22,12 @@ background:#0f172a;
 padding:15px;
 margin:10px;
 border-radius:15px;
+transition: background 0.5s, color 0.5s;
+}
+
+body.day .panel{
+background:#dbeafe;
+color:#111;
 }
 
 .balance{
@@ -35,8 +47,9 @@ color:black;
 cursor:pointer;
 }
 
-.shop button{
-background:#38bdf8;
+body.day button{
+background:#3b82f6;
+color:white;
 }
 
 .stat{
@@ -48,4 +61,8 @@ canvas{
 background:#0f172a;
 border-radius:10px;
 margin-top:10px;
+}
+
+body.day canvas{
+background:#dbeafe;
 }
