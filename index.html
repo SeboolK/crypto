@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ULTRA+ Koparka Krypto</title>
+<title>ULTRA+ Koparka Krypto - Miner Shop</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,19 +24,31 @@
 </div>
 
 <div class="panel shop">
-<h2>🛒 Ulepszenia</h2>
-<div>CPU upgrade (+0.000002 BTC/s)<br>
-<button onclick="buyCPU()">Kup (0.00005 BTC)</button></div>
-<div>GPU upgrade (+0.00001 BTC/s)<br>
-<button onclick="buyGPU()">Kup (0.0002 BTC)</button></div>
-<div>ASIC Miner (+0.00005 BTC/s)<br>
-<button onclick="buyASIC()">Kup (0.001 BTC)</button></div>
-<div>Farma koparek (+0.0002 BTC/s)<br>
-<button onclick="buyFarm()">Kup (0.005 BTC)</button></div>
+<h2>🛒 Sklep z Minerami</h2>
+
+<div>Antminer S19<br>
+Cena: $3000<br>
+Prędkość: +0.00005 BTC/s<br>
+<button onclick="buyMiner('Antminer S19')">Kup</button></div>
+
+<div>WhatsMiner M30S++<br>
+Cena: $2800<br>
+Prędkość: +0.000045 BTC/s<br>
+<button onclick="buyMiner('WhatsMiner M30S++')">Kup</button></div>
+
+<div>Antminer S19 Pro<br>
+Cena: $4000<br>
+Prędkość: +0.00006 BTC/s<br>
+<button onclick="buyMiner('Antminer S19 Pro')">Kup</button></div>
+
+<div>AvalonMiner 1246<br>
+Cena: $3200<br>
+Prędkość: +0.00005 BTC/s<br>
+<button onclick="buyMiner('AvalonMiner 1246')">Kup</button></div>
 </div>
 
 <div class="panel exchange">
-<h2>💱 Giełda</h2>
+<h2>💱 Giełda Krypto</h2>
 <div id="prices"></div>
 <div>
 <input type="number" id="amount" placeholder="Ilość coina">
