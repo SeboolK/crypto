@@ -3,126 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ULTRA Koparka Krypto</title>
+<title>ULTRA+ Koparka Krypto</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<h1>⛏️ ULTRA Koparka Krypto</h1>
+<h1>⛏️ ULTRA+ Koparka Krypto</h1>
 
 <div class="panel">
 <h2>Saldo</h2>
 <div class="balance" id="btc">BTC: 0.00000000</div>
 <div class="balance" id="eth">ETH: 0.00000000</div>
 <div class="balance" id="doge">DOGE: 0.00000000</div>
+<div class="balance" id="ltc">LTC: 0.00000000</div>
+<div class="balance" id="ada">ADA: 0.00000000</div>
 
 <div class="stat">Prędkość kopania (BTC/s): <span id="speed">0.000001</span></div>
-
 <button onclick="start()">Start kopania</button>
 <button onclick="stop()">Stop</button>
 </div>
 
 <div class="panel shop">
 <h2>🛒 Ulepszenia</h2>
-
 <div>CPU upgrade (+0.000002 BTC/s)<br>
 <button onclick="buyCPU()">Kup (0.00005 BTC)</button></div>
-
 <div>GPU upgrade (+0.00001 BTC/s)<br>
 <button onclick="buyGPU()">Kup (0.0002 BTC)</button></div>
-
 <div>ASIC Miner (+0.00005 BTC/s)<br>
 <button onclick="buyASIC()">Kup (0.001 BTC)</button></div>
-
 <div>Farma koparek (+0.0002 BTC/s)<br>
 <button onclick="buyFarm()">Kup (0.005 BTC)</button></div>
 </div>
 
+<div class="panel exchange">
+<h2>💱 Giełda</h2>
+<div id="prices"></div>
+<div>
+<input type="number" id="amount" placeholder="Ilość coina">
+<select id="coinSelect">
+<option value="btc">BTC</option>
+<option value="eth">ETH</option>
+<option value="doge">DOGE</option>
+<option value="ltc">LTC</option>
+<option value="ada">ADA</option>
+</select>
+<button onclick="buyCoin()">Kup</button>
+<button onclick="sellCoin()">Sprzedaj</button>
+</div>
+</div>
+
 <div class="panel">
-<h2>Wykres zarobków</h2>
+<h2>Wykres BTC</h2>
 <canvas id="chart" width="300" height="150"></canvas>
 </div>
 
-<script>
-let btc = parseFloat(localStorage.getItem("btc")||0);
-let eth = parseFloat(localStorage.getItem("eth")||0);
-let doge = parseFloat(localStorage.getItem("doge")||0);
-
-let speed = parseFloat(localStorage.getItem("speed")||0.000001);
-let mining = null;
-
-let history = JSON.parse(localStorage.getItem("history")||"[]");
-let chart = document.getElementById("chart");
-let ctx = chart.getContext("2d");
-
-function update(){
-document.getElementById("btc").innerText = "BTC: "+btc.toFixed(8);
-document.getElementById("eth").innerText = "ETH: "+eth.toFixed(8);
-document.getElementById("doge").innerText = "DOGE: "+doge.toFixed(8);
-document.getElementById("speed").innerText = speed.toFixed(6);
-
-localStorage.setItem("btc", btc);
-localStorage.setItem("eth", eth);
-localStorage.setItem("doge", doge);
-localStorage.setItem("speed", speed);
-localStorage.setItem("history", JSON.stringify(history));
-
-drawChart();
-}
-
-function start(){
-if(mining) return;
-mining = setInterval(()=>{
-btc += speed;
-eth += speed*0.02;
-doge += speed*50;
-
-history.push(btc);
-if(history.length>30) history.shift();
-
-update();
-},1000);
-}
-
-function stop(){
-clearInterval(mining);
-mining=null;
-}
-
-function buyCPU(){buyUpgrade(0.00005,0.000002);}
-function buyGPU(){buyUpgrade(0.0002,0.00001);}
-function buyASIC(){buyUpgrade(0.001,0.00005);}
-function buyFarm(){buyUpgrade(0.005,0.0002);}
-
-function buyUpgrade(cost, inc){
-if(btc>=cost){
-btc-=cost;
-speed+=inc;
-update();
-}else{
-alert("Za mało BTC!");
-}
-}
-
-function drawChart(){
-ctx.clearRect(0,0,chart.width,chart.height);
-ctx.beginPath();
-ctx.strokeStyle="#22c55e";
-ctx.lineWidth=2;
-
-for(let i=0;i<history.length;i++){
-let x = i*(chart.width/30);
-let y = chart.height - (history[i]/0.01)*chart.height;
-if(y>chart.height) y=chart.height;
-if(i==0) ctx.moveTo(x,y);
-else ctx.lineTo(x,y);
-}
-ctx.stroke();
-}
-
-update();
-</script>
-
 </body>
+<script src="script.js"></script>
 </html>
