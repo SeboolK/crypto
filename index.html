@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Symulator Kopania BTC</title>
+
+<style>
+body{
+font-family: Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+padding-top:80px;
+}
+
+h1{
+font-size:32px;
+}
+
+#btc{
+font-size:40px;
+margin:20px;
+color:#22c55e;
+}
+
+button{
+font-size:20px;
+padding:15px 30px;
+margin:10px;
+border:none;
+border-radius:10px;
+background:#f59e0b;
+color:black;
+}
+
+.status{
+margin-top:20px;
+font-size:18px;
+color:#94a3b8;
+}
+</style>
+</head>
+
+<body>
+
+<h1>⛏️ Koparka Bitcoin</h1>
+
+<div id="btc">0.00000000 BTC</div>
+
+<button onclick="start()">Start kopania</button>
+<button onclick="stop()">Stop</button>
+
+<div class="status" id="status">Status: zatrzymane</div>
+
+<script>
+
+let btc = 0;
+let mining = null;
+
+function start(){
+if(mining) return;
+
+document.getElementById("status").innerText="Status: kopanie...";
+
+mining = setInterval(()=>{
+
+let reward = Math.random()*0.00001;
+btc += reward;
+
+document.getElementById("btc").innerText =
+btc.toFixed(8) + " BTC";
+
+},1000);
+}
+
+function stop(){
+clearInterval(mining);
+mining=null;
+
+document.getElementById("status").innerText="Status: zatrzymane";
+}
+
+</script>
+
+</body>
+</html>
