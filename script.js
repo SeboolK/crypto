@@ -1,4 +1,4 @@
-// --- WALUTY I STAN GRY ---
+// --- STAN GRY ---
 let balances = {
 btc: parseFloat(localStorage.getItem("btc")||0),
 eth: parseFloat(localStorage.getItem("eth")||0),
@@ -9,23 +9,16 @@ ada: parseFloat(localStorage.getItem("ada")||0)
 
 let speed = parseFloat(localStorage.getItem("speed")||0.000001);
 let mining = null;
-let history = JSON.parse(localStorage.getItem("history")||"[]");
+let history = JSON.parse(localStorage.getItem("history")||[]);
 
 let chart = document.getElementById("chart");
 let ctx = chart.getContext("2d");
 
-// --- CENY COINÓW (giełda) ---
-let prices = {
-btc: 30000,
-eth: 2000,
-doge: 0.07,
-ltc: 150,
-ada: 0.5
-};
-
+// --- CENY KRYPTOWALUT ---
+let prices = {btc:30000, eth:2000, doge:0.07, ltc:150, ada:0.5};
 function updatePrices(){
 for(let coin in prices){
-prices[coin] *= 1 + (Math.random()-0.5)/50; // losowy ruch ±1%
+prices[coin] *= 1 + (Math.random()-0.5)/50;
 }
 document.getElementById("prices").innerHTML = Object.keys(prices).map(c=>c.toUpperCase()+": $"+prices[c].toFixed(2)).join("<br>");
 }
@@ -67,24 +60,25 @@ update();
 },1000);
 }
 
-function stop(){
-clearInterval(mining);
-mining=null;
-}
+function stop(){clearInterval(mining);mining=null;}
 
-// --- ULEPSZENIA ---
-function buyUpgrade(cost, inc){
-if(balances.btc>=cost){
-balances.btc-=cost;
-speed+=inc;
+// --- REALNE MINERY ---
+const miners = {
+"Antminer S19": {price:3000, speed:0.00005},
+"WhatsMiner M30S++": {price:2800, speed:0.000045},
+"Antminer S19 Pro": {price:4000, speed:0.00006},
+"AvalonMiner 1246": {price:3200, speed:0.00005}
+};
+
+function buyMiner(name){
+const miner = miners[name];
+let confirmation = confirm(`Kup ${name} za $${miner.price}? Symulacja płatności.`);
+if(confirmation){
+speed += miner.speed;
+alert(`${name} zakupiony! Prędkość kopania +${miner.speed.toFixed(6)} BTC/s`);
 update();
-}else alert("Za mało BTC!");
 }
-
-function buyCPU(){buyUpgrade(0.00005,0.000002);}
-function buyGPU(){buyUpgrade(0.0002,0.00001);}
-function buyASIC(){buyUpgrade(0.001,0.00005);}
-function buyFarm(){buyUpgrade(0.005,0.0002);}
+}
 
 // --- GIEŁDA ---
 function buyCoin(){
@@ -116,7 +110,6 @@ ctx.clearRect(0,0,chart.width,chart.height);
 ctx.beginPath();
 ctx.strokeStyle="#22c55e";
 ctx.lineWidth=2;
-
 for(let i=0;i<history.length;i++){
 let x = i*(chart.width/30);
 let y = chart.height - (history[i]/0.01)*chart.height;
